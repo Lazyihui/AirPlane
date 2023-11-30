@@ -11,6 +11,12 @@ typedef struct Context
     
 //////////////////////////////////子弹
     Bullet bullet;
+
+
+    Vector2 a;
+    Vector2 pos;
+    float speed;
+    
 }Context;
 
 
