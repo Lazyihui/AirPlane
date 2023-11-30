@@ -29,12 +29,6 @@ void ContextInit(Context *ctx) {
     ctx->monster.pos.y = 50;
     ctx->monster.radius = 30;
     ctx->monster.speed = 120;
-
-    ctx->a.x = 0;
-    ctx->a.y = 0;
-    ctx->speed = 120;
-    ctx->pos.x = 50;
-    ctx->pos.y = 50;
 }
 
 void Draw_all(Context *ctx) {
@@ -49,8 +43,18 @@ int main() {
     InitWindow(800, 450, "cyh");
     SetTargetFPS(60);
 
-    Context *ctx;
-    ContextInit(ctx);
+    Context ctx;
+    ContextInit(&ctx);
+
+    Vector2 loction;
+    Vector2 pos;
+    float speed = 120;
+    loction.x = 0;
+    loction.y = 0;
+    pos.x = 50;
+    pos.y = 50;
+    float dt = GetFrameTime();
+    int stute = 0;
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
@@ -58,46 +62,31 @@ int main() {
         ClearBackground(BLACK);
         time_t current_time = time(NULL);
 
-        Plane_Axis(&ctx->plane);
-        Plane_Move(&ctx->plane, ctx->plane.moveAxis, dt);
+        Plane_Axis(&ctx.plane);
+        Plane_Move(&ctx.plane, ctx.plane.moveAxis, dt);
+        if (stute == 0) {
+            if (IsKeyDown(KEY_SPACE)) {
+                for (int i = 0; i < 700; i++) {
+                    printf("a");
+                    loction.x += dt;
+                    Vector2 dir = Vector2Normalize(loction);
+                    dir = Vector2Scale(dir, speed * dt);
+                    pos = Vector2Add(pos, dir);
+                }
 
-        // for (int i = 0; i < 800; i++) {
-        //     ctx.a.x = ctx.a.x + ctx.a.x * dt;
-        //     DrawCircle(ctx.a.x, ctx.a.y, 30, GRAY);
-        //     if (ctx.a.x > 750) {
-        //         for (int i = 0; i < 800; i++) {
-        //             ctx.a.x = ctx.a.x - ctx.a.x * dt;
-        //             DrawCircle(ctx.a.x, ctx.a.y, 30, RED);
-        //         }
-        //     }
-        // }
-                DrawCircle(ctx->pos.x, ctx->pos.y, 30, GREEN);
-
-        if (IsKeyDown(KEY_SPACE)) {
-
-            for (int i = 0; i < 800; i++) {
-                Vector2 a = Vector2Normalize(ctx->a);
-                a.x++;
-                a = Vector2Scale(a, ctx->speed * dt);
-                ctx->pos = Vector2Add(ctx->pos, ctx->a);
-
-                DrawCircle(ctx->pos.x, ctx->pos.y, 30, GRAY);
-                printf("a");
-                if (ctx->a.x > 750) {
-
-                    for (int i = 0; i < 800; i++) {
-                        Vector2 a = Vector2Normalize(ctx->a);
-                        a.x--;
-                        a = Vector2Scale(a, ctx->speed * dt);
-                        ctx->pos = Vector2Add(ctx->pos, ctx->a);
-
-                        DrawCircle(ctx->pos.x, ctx->pos.y, 30, RED);
-                    printf("B");
-                    }
+                if (loction.x > 700) {
+                    stute == 1;
+                    printf("b");
+                    loction.x -= dt;
+                    Vector2 dir = Vector2Normalize(loction);
+                    dir = Vector2Scale(dir, speed * dt);
+                    pos = Vector2Add(pos, dir);
                 }
             }
+            DrawCircle(pos.x, pos.y, 30, GREEN);
+        } else if (stute == 1) {
+            DrawCircle(pos.x, pos.y, 30, RED);
         }
-
         // Draw_all(&ctx);
         EndDrawing();
     }
