@@ -7,6 +7,17 @@ typedef struct Bullet {
     float radius;
     float speed;
     Vector2 pos;
+    Vector2 movepos;
 } Bullet;
 
+
+void Bullet_Move(Bullet *bullet,float dt){
+    Vector2 loction = Vector2Normalize(bullet->movepos);
+    loction = Vector2Scale(loction,bullet->speed*dt);
+    bullet->pos=Vector2Add(bullet->pos,loction);
+}
+
+void BUllet_Draw(Bullet *bullet){
+    DrawCircle(bullet->pos.x,bullet->pos.y,bullet->radius,bullet->color);
+}
 #endif

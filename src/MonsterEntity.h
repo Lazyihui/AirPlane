@@ -10,8 +10,8 @@ typedef struct Monster {
     Vector2 pos;
 }Monster;
 
-void Monster_Draw(Monster monster){
-
+void Monster_Draw(Monster *monster){
+    DrawCircle(monster->pos.x,monster->pos.y,monster->radius,monster->color);
 }
 
 #endif

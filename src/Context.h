@@ -7,9 +7,10 @@ typedef struct Context
     Plane plane;
 
 //////////////////////////////////怪物
-    Monster monster[50];
+    Monster monster;
     
-
+//////////////////////////////////子弹
+    Bullet bullet;
 }Context;
 
 
