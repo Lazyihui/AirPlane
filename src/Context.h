@@ -21,26 +21,23 @@ void ContextInit(Context *ctx) {
 
     ctx->plane.color = RED;
     ctx->plane.pos.x = 400;
-    ctx->plane.pos.y = 400;
+    ctx->plane.pos.y = 200;
     ctx->plane.radius = 20;
     ctx->plane.speed = 150;
+    ctx->plane.hp=100;
+    ctx->plane.faceDir.x=0;
+    ctx->plane.faceDir.y=-1;
 
     ////////////////////////////////////////////////////////Bullet
 
-    // ctx->bullet.color = GREEN;
-    // ctx->bullet.pos.x = 0;
-    // ctx->bullet.pos.y = 0;
-    // ctx->bullet.radius = 100;
-    // ctx->bullet.speed = 200;
 
     // f//////////////////////////////////////////////////////////Monster
     ctx->monstercount = 5;
     for (int i = 0; i < ctx->monstercount; i++) {
-        int rdx = get_rand(0, 50);
-        int rdy = get_rand(0, 450);
+        // int rdx = get_rand(0, 50);
+        // int rdy = get_rand(0, 450);
         Monster monster=(Monster){0};
-        monster.pos.x = rdx;
-        monster.pos.y = rdy;
+        monster.pos = Get_randVector();
         monster.color = YELLOW;
         monster.moveAxis.x = 1;
         monster.moveAxis.y = 0;

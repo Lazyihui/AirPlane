@@ -10,6 +10,9 @@ typedef struct Bullet {
     Vector2 movepos;
 } Bullet;
 
+void Bullet_InputByPlane(Monster *monster , Vector2 targetpos){
+    monster->moveAxis=Vector2Subtract(targetpos,monster->pos);
+}
 
 void Bullet_Move(Bullet *bullet,float dt){
     Vector2 loction = Vector2Normalize(bullet->movepos);
@@ -20,4 +23,6 @@ void Bullet_Move(Bullet *bullet,float dt){
 void BUllet_Draw(Bullet *bullet){
     DrawCircle(bullet->pos.x,bullet->pos.y,bullet->radius,bullet->color);
 }
+
+
 #endif

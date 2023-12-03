@@ -23,7 +23,6 @@ void Monster_inputzy(Monster *monster) {
 
 void Monster_InputByTarget(Monster *monster , Vector2 targetpos){
     monster->moveAxis=Vector2Subtract(targetpos,monster->pos);
-    
 }
 ////z//////////////////////////根据输入方向 改变坐标
 void Monster_Move(Monster *monster, Vector2 moveAxis, float dt) {

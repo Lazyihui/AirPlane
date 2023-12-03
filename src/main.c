@@ -10,6 +10,7 @@
 void Draw_all(Context *ctx) {
 
     Plane_Draw(ctx->plane);
+    plane_DrawUI(ctx->plane);
 
     for (int i = 0; i < ctx->monstercount; i++) {
         Monster *monster = &ctx->monsterarr[i];
@@ -24,7 +25,6 @@ int main() {
     Context ctx = {0};
     ContextInit(&ctx);
 
-
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
         BeginDrawing();
@@ -32,7 +32,7 @@ int main() {
 
         Plane_Axis(&ctx.plane);
         Plane_Move(&ctx.plane, ctx.plane.moveAxis, dt);
-
+        Plane_rotate(&ctx.plane);
         // All Monster Logic
         for (int i = 0; i < ctx.monstercount; i++) {
             Monster *monster = &ctx.monsterarr[i];
@@ -42,13 +42,13 @@ int main() {
                 Monster_InputByTarget(monster, ctx.plane.pos);
 
                 // Monster Move
-                Monster_Move(monster,monster->moveAxis, dt);
+                Monster_Move(monster, monster->moveAxis, dt);
 
                 // Monster Hit
                 bool iscircle = IsCirlceInsideCircle(monster->radius, ctx.plane.radius, monster->pos, ctx.plane.pos);
                 if (iscircle) {
                     monster->isAlive = false;
-
+                    ctx.plane.hp -=10;
                 }
             }
         }
@@ -62,6 +62,7 @@ int main() {
                 ctx.monstercount -= 1;
             }
         }
+
 
         Draw_all(&ctx);
         EndDrawing();

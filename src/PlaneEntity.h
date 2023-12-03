@@ -9,6 +9,8 @@ typedef struct Plane {
     Vector2 pos;
     float radius;
     Vector2 moveAxis;
+    Vector2 faceDir;
+    int hp;
 } Plane;
 
 ////////////////////////////////////////////////////////移动
@@ -36,8 +38,28 @@ void Plane_Move(Plane *plane, Vector2 moveAxis, float dt) {
         posptr->y = 0;
     }
 }
+
+void Plane_rotate(Plane *plane) {
+    if (plane->moveAxis.x == 0 && plane->moveAxis.y == 0) {////不变
+        return;    
+    } 
+    plane->faceDir=plane->moveAxis;
+}
+
 void Plane_Draw(Plane plane) {
-    DrawCircle(plane.pos.x, plane.pos.y, plane.radius, plane.color);
+    // 机身
+    Vector2 pos = plane.pos;
+    DrawCircle(pos.x, pos.y, plane.radius, plane.color);
+
+    // 枪口
+    Vector2 muzzleEndPos = Vector2Scale(plane.faceDir, 50);
+    muzzleEndPos = Vector2Add(pos, muzzleEndPos);
+    DrawLineV(pos, muzzleEndPos, GREEN);
+}
+
+void plane_DrawUI(Plane plane) {
+    const char *b = TextFormat("%d", plane.hp);
+    DrawText(b, 10, 10, 30, RED);
 }
 
 #endif
