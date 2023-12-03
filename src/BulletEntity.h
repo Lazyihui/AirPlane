@@ -21,6 +21,11 @@ typedef struct Bullet {
 //     } 
 //     bullet->moveAxis= plane->moveAxis;
 // }
+// inline void Context_AddBullet(Context* ctx, BulletEntity bullet) {
+//     ctx->bullets[ctx->bulletCountInUse] = bullet;
+//     ctx->bulletCountInUse += 1;
+// }
+
 
 
 void  Bullet_Move(Bullet *bullet,float dt){

@@ -16,8 +16,12 @@ void Draw_all(Context *ctx) {
         Monster *monster = &ctx->monsterarr[i];
         Monster_Draw(monster);
     }
-    if (ctx->bullet.isActive) {
-        BUllet_Draw(&ctx->bullet);
+    if (ctx->bulletstatus == 1) {
+        for (int i = 0; i < ctx->bulletcount; i++) {
+            printf("%d", ctx->bulletcount);
+            Bullet *bullet = &ctx->bullets[i];
+            BUllet_Draw(bullet);
+        }
     }
 }
 
@@ -65,16 +69,40 @@ int main() {
                 ctx.monstercount -= 1;
             }
         }
+        ///////////////////////////////////////////////////////////////////////画一个子弹
+        // Bullet *bullet = &ctx.bullet;
+        // if (bullet->isActive) {
+        //     Bullet_Move(&ctx.bullet, dt);
+        // }
 
-        Bullet *bullet = &ctx.bullet;
-        if (bullet->isActive) {
-            Bullet_Move(&ctx.bullet, dt);
+        // if (IsKeyDown(KEY_SPACE)) {
+        //     bullet->isActive = true;
+        //     bullet->pos = ctx.plane.pos;
+        //     bullet->moveAxis = ctx.plane.faceDir;
+        // }
+        ////////////////////////////////////////////////////////////////////////////////////
+
+        if (IsKeyPressed(KEY_SPACE)) {
+
+            ctx.bulletcount += 1;
+
+            for (int i = 0; i < ctx.bulletcount; i += 1) {
+                Bullet *bullet = &ctx.bullets[i];
+                bullet->pos = ctx.plane.pos;
+                bullet->moveAxis = ctx.plane.faceDir;
+                bullet->color = GRAY;
+                bullet->pos = ctx.plane.pos;
+                bullet->radius = 10;
+                bullet->speed = 160;
+            }
+            ctx.bulletstatus = 1;
         }
 
-        if (IsKeyDown(KEY_SPACE)) {
-            bullet->isActive = true;
-            bullet->pos = ctx.plane.pos;
-            bullet->moveAxis = ctx.plane.faceDir;
+        
+
+        for (int i = 0; i < ctx.bulletcount; i += 1) {
+            Bullet *bullet = &ctx.bullets[i];
+            Bullet_Move(bullet, dt);
         }
 
         Draw_all(&ctx);
