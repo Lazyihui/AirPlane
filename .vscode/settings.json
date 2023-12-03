@@ -8,6 +8,7 @@
         "planeentity.h": "c",
         "raymath.h": "c",
         "monsterentity.h": "c",
-        "bulletentity.h": "c"
+        "bulletentity.h": "c",
+        "stdio.h": "c"
     }
 }
