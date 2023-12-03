@@ -24,11 +24,16 @@ void ContextInit(Context *ctx) {
     ctx->bullet.speed = 200;
 
     // f//////////////////////////////////////////////////////////Monster
-    ctx->monster.color = YELLOW;
-    ctx->monster.pos.x = 50;
-    ctx->monster.pos.y = 50;
-    ctx->monster.radius = 30;
-    ctx->monster.speed = 120;
+    Monster *monster=&ctx->monster;
+    monster->color = YELLOW;
+    monster->pos.x = 50;
+    monster->pos.y = 50;
+    monster->radius = 30;
+    monster->speed = 120;
+    monster->moveAxis.x=1;
+    monster->moveAxis.y=0;
+
+
 }
 
 void Draw_all(Context *ctx) {
@@ -46,15 +51,7 @@ int main() {
     Context ctx;
     ContextInit(&ctx);
 
-    Vector2 loction;
-    Vector2 pos;
-    float speed = 120;
-    loction.x = 0;
-    loction.y = 0;
-    pos.x = 50;
-    pos.y = 50;
-    float dt = GetFrameTime();
-    int stute = 0;
+    int status = 0;
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
@@ -64,30 +61,12 @@ int main() {
 
         Plane_Axis(&ctx.plane);
         Plane_Move(&ctx.plane, ctx.plane.moveAxis, dt);
-        if (stute == 0) {
-            if (IsKeyDown(KEY_SPACE)) {
-                for (int i = 0; i < 700; i++) {
-                    printf("a");
-                    loction.x += dt;
-                    Vector2 dir = Vector2Normalize(loction);
-                    dir = Vector2Scale(dir, speed * dt);
-                    pos = Vector2Add(pos, dir);
-                }
 
-                if (loction.x > 700) {
-                    stute == 1;
-                    printf("b");
-                    loction.x -= dt;
-                    Vector2 dir = Vector2Normalize(loction);
-                    dir = Vector2Scale(dir, speed * dt);
-                    pos = Vector2Add(pos, dir);
-                }
-            }
-            DrawCircle(pos.x, pos.y, 30, GREEN);
-        } else if (stute == 1) {
-            DrawCircle(pos.x, pos.y, 30, RED);
-        }
-        // Draw_all(&ctx);
+        Monster_InputByTarget(&ctx.monster,ctx.plane.pos);
+        Monster_Move(&ctx.monster,ctx.monster.moveAxis,dt);
+
+
+        Draw_all(&ctx);
         EndDrawing();
     }
     CloseWindow();
