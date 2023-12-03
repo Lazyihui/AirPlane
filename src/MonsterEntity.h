@@ -9,6 +9,7 @@ typedef struct Monster {
     float speed;
     Vector2 pos;
     Vector2 moveAxis;
+    bool isAlive;
 } Monster;
 
 void Monster_inputzy(Monster *monster) {
