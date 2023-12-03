@@ -30,7 +30,14 @@ void ContextInit(Context *ctx) {
 
     ////////////////////////////////////////////////////////Bullet
 
-
+    Bullet *bullet = &ctx->bullet;
+    bullet->color=GRAY;
+    bullet->moveAxis.x=0;
+    bullet->moveAxis.y=0;
+    bullet->pos=ctx->plane.pos;
+    bullet->radius=10;
+    bullet->speed=160;
+    bullet->isActive=false;
     // f//////////////////////////////////////////////////////////Monster
     ctx->monstercount = 5;
     for (int i = 0; i < ctx->monstercount; i++) {

@@ -46,6 +46,7 @@ void Plane_rotate(Plane *plane) {
     plane->faceDir=plane->moveAxis;
 }
 
+
 void Plane_Draw(Plane plane) {
     // 机身
     Vector2 pos = plane.pos;

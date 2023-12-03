@@ -16,6 +16,9 @@ void Draw_all(Context *ctx) {
         Monster *monster = &ctx->monsterarr[i];
         Monster_Draw(monster);
     }
+    if (ctx->bullet.isActive) {
+        BUllet_Draw(&ctx->bullet);
+    }
 }
 
 int main() {
@@ -48,7 +51,7 @@ int main() {
                 bool iscircle = IsCirlceInsideCircle(monster->radius, ctx.plane.radius, monster->pos, ctx.plane.pos);
                 if (iscircle) {
                     monster->isAlive = false;
-                    ctx.plane.hp -=10;
+                    ctx.plane.hp -= 10;
                 }
             }
         }
@@ -63,6 +66,16 @@ int main() {
             }
         }
 
+        Bullet *bullet = &ctx.bullet;
+        if (bullet->isActive) {
+            Bullet_Move(&ctx.bullet, dt);
+        }
+
+        if (IsKeyDown(KEY_SPACE)) {
+            bullet->isActive = true;
+            bullet->pos = ctx.plane.pos;
+            bullet->moveAxis = ctx.plane.faceDir;
+        }
 
         Draw_all(&ctx);
         EndDrawing();
