@@ -8,16 +8,11 @@ typedef struct Plane {
     float speed;
     Vector2 pos;
     float radius;
-    Vector2 moveAxis;
     Vector2 faceDir;
     int hp;
 } Plane;
 
 ////////////////////////////////////////////////////////移动
-void Plane_Axis(Plane *plane) {
-    plane->moveAxis.x = IsKeyDown(KEY_D) - IsKeyDown(KEY_A);
-    plane->moveAxis.y = IsKeyDown(KEY_S) - IsKeyDown(KEY_W);
-}
 
 void Plane_Move(Plane *plane, Vector2 moveAxis, float dt) {
     Vector2 *posptr = &plane->pos;
@@ -39,11 +34,11 @@ void Plane_Move(Plane *plane, Vector2 moveAxis, float dt) {
     }
 }
 
-void Plane_rotate(Plane *plane) {
-    if (plane->moveAxis.x == 0 && plane->moveAxis.y == 0) {////不变
+void Plane_rotate(Plane *plane,Vector2 moveAxis) {
+    if (moveAxis.x == 0 && moveAxis.y == 0) {////不变
         return;    
     } 
-    plane->faceDir=plane->moveAxis;
+    plane->faceDir=moveAxis;    
 }
 
 

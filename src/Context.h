@@ -1,8 +1,14 @@
 #ifndef CONTEXT_H__
 #define CONTEXT_H__
 #include "common.h"
-
+#include "InputEntity.h"
+#include "BulletEntity.h"
+#include "PlaneEntity.h"
+#include "MonsterEntity.h"
 typedef struct Context {
+
+    InputEntity input;
+
     //////////////////////////////////飞机
     Plane plane;
 
@@ -10,16 +16,14 @@ typedef struct Context {
     Monster monsterarr[5];
     int monstercount;
     //////////////////////////////////子弹
-    Bullet bullet;
     int bulletcount;
     Bullet bullets[1000];
-    Vector2 a;
-    Vector2 pos;
-    float speed;
-    int bulletstatus;
+
 } Context;
 
 void ContextInit(Context *ctx) {
+
+    ctx->input = (InputEntity){0};
 
     ctx->plane.color = RED;
     ctx->plane.pos.x = 400;
@@ -32,7 +36,6 @@ void ContextInit(Context *ctx) {
 
     ////////////////////////////////////////////////////////Bullet
 
-    Bullet *bullet = &ctx->bullet;
     // bullet->color = GRAY;
     // bullet->moveAxis.x = 0;
     // bullet->moveAxis.y = 0;
@@ -40,22 +43,20 @@ void ContextInit(Context *ctx) {
     // bullet->radius = 10;
     // bullet->speed = 160;
     // bullet->isActive = false;
-    ctx->bulletstatus = 0;
-
 
     // f//////////////////////////////////////////////////////////Monster
     ctx->monstercount = 5;
     for (int i = 0; i < ctx->monstercount; i++) {
         // int rdx = get_rand(0, 50);
         // int rdy = get_rand(0, 450);
-    
+
         Monster monster = (Monster){0};
         monster.pos = Get_randVector();
         monster.color = YELLOW;
         monster.moveAxis.x = 1;
         monster.moveAxis.y = 0;
         monster.radius = 10;
-        monster.speed = 120;
+        monster.speed = 50;
         monster.isAlive = true;
         ctx->monsterarr[i] = monster;
     }
